@@ -10,7 +10,7 @@ from sqlalchemy import text
 router = FastAPI()
 router.include_router(main_router)
 router.include_router(jobs_router)
-router.include_router(auth_router)
+# router.include_router(auth_router)
 
 
 

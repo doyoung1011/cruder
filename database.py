@@ -4,19 +4,17 @@
 from fastapi import APIRouter, Depends, Request
 from sqlmodel import Session, create_engine,text
 
+from config import DATABASE_URL
 
-def get_session():
-    with Session(engine) as session:
-        yield session
-        session.commit()
-
-
-DATABASE_URL = 'mysql+pymysql://root:human123$@127.0.0.1:3306/human'
 
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True
 )
+def get_session():
+    with Session(engine) as session:
+        yield session
+        session.commit()
 
 
 # 연결 확인 잘 되었는지 확인용
