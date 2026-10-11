@@ -2,11 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from router.main_router import router as main_router
 from router.jobs_router import router as jobs_router
+from fastapi.staticfiles import StaticFiles
 
+from database import engine
+from sqlalchemy import text
 
 router = FastAPI()
 router.include_router(main_router)
 router.include_router(jobs_router)
+router.include_router(auth_router)
+
+
+
+
+
 router.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -16,6 +25,30 @@ router.add_middleware(
     allow_methods=['*'],
     allow_headers=['*']
 )
+
+
+# =========================================================
+# assets 폴더 연결
+# =========================================================
+
+router.mount(
+    "/assets",
+    StaticFiles(directory="assets"),
+    name="assets"
+)
+
+# =========================================================
+# static 폴더 연결
+# =========================================================
+
+router.mount(
+    "/static",
+    StaticFiles(directory="static"),
+    name="static"
+)
+
+
+
 
 
 
